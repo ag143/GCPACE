@@ -19,6 +19,8 @@ Private Cloud - on-premises cloud
 Hybrid Cloud – private Cloud + public cloud
 Hybrid Environment - on-premise data center + public cloud
 ### Cloud Service Models
+![image info](CloudServiceModels.jpg)
+![image info](images/GoogleCloudGlobalInfrastructure.png)
 ### Google Cloud Global Infrastructure
 13 Subsea Cables; Hundreds of thousands of miles of fiber cables
 
