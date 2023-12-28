@@ -21,6 +21,8 @@ Hybrid Environment - on-premise data center + public cloud
 ### Cloud Service Models
 ![image info](CloudServiceModels.jpg)
 ![image info](images/GoogleCloudGlobalInfrastructure.png)
+![alt text](CloudServiceModels.jpg "Title")
+<img src=CloudServiceModels.jpg>img reference</img>
 ### Google Cloud Global Infrastructure
 13 Subsea Cables; Hundreds of thousands of miles of fiber cables
 
