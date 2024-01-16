@@ -47,9 +47,18 @@ if (tbl != null) {
         for (var j = 0; j < tbl.rows[i].cells.length; j++) {
             tbl.rows[i].cells[j].onmouseover = (function (i, j) {
                 return function () {
-				document.getElementById("result").innerText= (i + 1);
-				document.getElementById("result2").innerText= (j + 1);
+				//document.getElementById("result").innerText= (i + 1);
+//				document.getElementById("result2").innerText= (j + 1);
                     //alert('R' + (i + 1) + 'C' + (j + 1));
+					var table = document.getElementById("tblMain"); 
+  var cells = table.getElementsByTagName("td"); 
+ 
+  for (var i = 0; i < cells.length; i++) { 
+    var cellValue = cells[i].innerHTML; // or cells[i].textContent 
+    console.log(cellValue); 
+	document.getElementById("result").innerText= cellValue;
+				document.getElementById("result2").innerText= cellValue;
+  } 
                 };
             }(i, j));
         }
@@ -95,6 +104,7 @@ if (tbl != null) {
           // ATTACH onclick event.
           tabCell.setAttribute('onclick', 'alert(this.innerHTML)');
 		  update()
+		  //getValue()
         }
       }
     }
@@ -108,4 +118,15 @@ if (tbl != null) {
   {
   alert('hi');
   }
+  function getValue() { 
+  var table = document.getElementById("tblMain"); 
+  var cells = table.getElementsByTagName("td"); 
+ 
+  for (var i = 0; i < cells.length; i++) { 
+    var cellValue = cells[i].innerHTML; // or cells[i].textContent 
+    console.log(cellValue); 
+	document.getElementById("result").innerText= cellValue;
+				document.getElementById("result2").innerText= cellValue;
+  } 
+} 
 </script>
