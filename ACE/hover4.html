@@ -1,0 +1,111 @@
+<center>Click on below table cell to find its value.
+    <br />
+    <br />
+</center>
+<table align="center" id="tblMain" border="1" style="cursor: pointer;">
+    <tr>
+        <td>R1C1</td>
+        <td>R1C2</td>
+        <td>R1C3</td>
+        <td>R1C4</td>
+    </tr>
+    <tr>
+        <td>R2C1</td>
+        <td>R2C2</td>
+        <td>R2C3</td>
+        <td>R2C4</td>
+    </tr>
+    <tr>
+        <td>R3C1</td>
+        <td>R3C2</td>
+        <td>R3C3</td>
+        <td>R3C4</td>
+    </tr>
+    <tr>
+        <td>R4C1</td>
+        <td>R4C2</td>
+        <td>R4C3</td>
+        <td>R4C44</td>
+    </tr>
+</table>
+<div id=result></div>
+<div id=result2></div>
+<br />
+  <h3>
+    Click the button to create an HTML table. Next, click any cell in the 2nd column to see the value.
+  </h3>
+
+  <input type='button' 
+         onclick='tableFromJson()' id='bt'
+         value='Create a Table' />
+
+  <p id='showData'></p>
+<script>
+var tbl = document.getElementById("tblMain");
+if (tbl != null) {
+    for (var i = 0; i < tbl.rows.length; i++) {
+        for (var j = 0; j < tbl.rows[i].cells.length; j++) {
+            tbl.rows[i].cells[j].onmouseover = (function (i, j) {
+                return function () {
+				document.getElementById("result").innerText= (i + 1);
+				document.getElementById("result2").innerText= (j + 1);
+                    //alert('R' + (i + 1) + 'C' + (j + 1));
+                };
+            }(i, j));
+        }
+    }
+}
+</script>
+<script>
+  let tableFromJson = () => {
+    // the json data.
+    const birds = [
+        {"ID": "001", "Bird": "Eurasian Collared-Dove"},
+        {"ID": "002", "Bird": "Bald Eagle"},
+        {"ID": "003", "Bird": "Cooper's Hawk"},
+    ];
+
+    let col = [];
+    for (let i = 0; i < birds.length; i++) {
+      for (let key in birds[i]) {
+        if (col.indexOf(key) === -1) {
+          col.push(key);
+        }
+      }
+    }
+
+    const table = document.createElement("table");
+    let tr = table.insertRow(-1);               // table row.
+
+    for (let i = 0; i < col.length; i++) {
+      let th = document.createElement("th");      // table header.
+      th.innerHTML = col[i];
+      tr.appendChild(th);
+    }
+
+    for (let i = 0; i < birds.length; i++) {
+      tr = table.insertRow(-1);
+
+      for (let j = 0; j < col.length; j++) {
+        let tabCell = tr.insertCell(-1);
+        tabCell.innerHTML = birds[i][col[j]];
+        if (col[j] === 'Bird') {
+          tabCell.setAttribute('id', 'br_' + birds[i][col[j]]);
+          
+          // ATTACH onclick event.
+          tabCell.setAttribute('onclick', 'alert(this.innerHTML)');
+		  update()
+        }
+      }
+    }
+
+    // Add table.
+    const div = document.getElementById('showData');
+    div.innerHTML = "";
+    div.appendChild(table);
+  }
+  function update()
+  {
+  alert('hi');
+  }
+</script>
