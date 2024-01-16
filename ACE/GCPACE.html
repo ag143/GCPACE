@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <script>
+      $("table tr").click(function() {
+        $($('#' + $(this).attr("href"))).siblings().hide().end().fadeIn();
+      });
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  </head>
+  <body>
+    <table border=1 align=left>
+      <tr href='content'>
+        <th>Service Type
+        <th colspan=6>Services
+      </tr>
+      <tr>
+        <td>Compute
+        <td>Compute Engine
+        <td>Kubernetes Engine
+        <td>App Engine
+        <td>Cloud Functions
+        <td>
+        <td>
+      </tr>
+      <tr>
+        <td>Management
+        <td>Cloud Console
+        <td>StackDriver
+        <td>Trace
+        <td>Logging
+        <td>Debugger
+        <td>Monitor
+      </tr>
+      <tr>
+        <td>Networking
+        <td>CloudLoadBalancing
+        <td>Cloud CDN
+        <td>Cloud DNS
+        <td>Firewall
+        <td>Cloud Interconnect
+        <td>Cloud VPN
+      </tr>
+      <tr>
+        <td>Storage & Databases
+        <td>Cloud Bigtable
+        <td>Cloud Datastore
+        <td>Cloud Spanner
+        <td>Cloud SQL
+        <td>Cloud Storage
+        <td>
+      </tr>
+      <tr>
+        <td>BigData
+        <td>Big Query
+        <td>Cloud Dataflow
+        <td>Cloud Datarep
+        <td>Cloud Dataproc
+        <td>Cloud Iot Core
+        <td>Cloud Pub/Sub
+      </tr>
+      <tr>
+        <td>Identity & Security
+        <td>Cloud IAM
+        <td>Cloud Endpoints
+        <td>VPC
+        <td>Identity Aware proxy
+        <td>KMS
+        <td>Data Loss prevention
+      </tr>
+      <tr>
+        <td>Machine Learning
+        <td>Cloud ML
+        <td>Natural Languange API
+        <td>Cloud Speech API
+        <td>Cloud Vision API
+        <td>Cloud Translate API
+        <td>
+      </tr>
+    </table>
+    <div id="content" align=left> Details of the service or Service Type </div>
+    <object data="hover.html" width="500" style="height: 300px">
+      <a href="hover.html">No Support?</a>
+    </object>
+  </body>
+</html>

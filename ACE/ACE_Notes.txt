@@ -1,0 +1,58 @@
+ACE_Notes
+1) Solution 1: GCP ACE getting started
+need of cloud platform(scailability, hight availability, durability, fault tolerant, operation expenditure)
+usage of GCP-third biggest cloud platform
+
+2) Google cloud regions and zones
+Zones: its geographical location where services are accessed with low latency
+region: more than 1 to 3 zones make a region to make high avaiability
+multi-region: to provide low latency across the globe
+
+3) Google compute Engine for ACE
+
+virtual machine: providing or renting on-demand virtual server or instance to end-user and pay based on usage. 
+install required software using startscript.sh or ps
+internal Ip adress: to communicate virutal Machine with internal google resources(corporate network)
+External IP address: to communicate with internet resources
+
+Static Ip adress: its reserved IP address which is chargable until its released and its associated to any of VM machines for external connectivity.
+
+Virtual Templates: creating of VM based on VM templates(list of options already selected for required type)
+
+custom images: in case of any new softwares to be installed in hand, you can have custom machine image along with software installed.
+
+
+hosting webserver in GCP virtual machine
+sudo su
+apt update
+apt install apache2
+ls /var/www/html
+echo "Hello World!"
+echo "Hello World!" > /var/www/html/index.html
+echo $(hostname)
+echo $(hostname -i)
+echo "Hello World from $(hostname)"
+echo "Hello World from $(hostname) $(hostname -i)"
+echo "Hello world from $(hostname) $(hostname -i)" > /var/www/html/index.html
+sudo service apache2 start
+
+
+#!/bin/bashapt update apt -y install apache2echo "Hello world from $(hostname) $(hostname -I)" > /var/www/html/index.html
+
+process of installing OS patches or software when VM instance is launched is called Bootstrapping
+
+4) Google concepts: optimizing costs and Performance in GCP
+
+4.1: Sustained use Discounts: 
+Automatic Discounts: based on usage its applied by platform(only GKE, and COmpute Engine) not E2, A2 compute type
+commited use discounts: predictable usage needs(1 or 3 years)70 % machine type and GPU, GKE and computes applicable
+Preemtible VM: SHort lived Cheaper(80% discount) lasts only 24 hours.
+Spot VM's: latest version of Preemitble VM.but aviable more than 24 hours.
+Compute Engine Billing: billed /second.
+budget alert:to alert when charges exceed certain limit.
+billing export:BIG query sends billing data biqquery dataset
+Live migration:move instance to another host in same zones
+Avaialbility Policy: migrate to another instance, stop, or automatic restart
+Custom machine types:when workload provided by google are not relevant, change cores, VCPU , memory.
+GPU(graphical processing unit):higher performance, higher cost,use images with GPU libraries, no live migration with GPU
+Virthual machines in GCP:

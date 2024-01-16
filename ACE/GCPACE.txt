@@ -1,0 +1,13 @@
+https://drive.google.com/file/d/1CEUeOwxeA_azEdpd8geiwASfUK_B-1Ra/view
+https://ag143.github.io/google-cloud-4-words/
+https://grumpygrace.dev/posts/gcp-flowcharts/
+
+
+https://tutorialsdojo.com/gcp-associate-cloud-engineer-exam-study-guide/
+https://www.cloudadvocate.net/p/associate-cloud-engineer-study-notes.html
+https://medium.com/gowthamlabs/google-cloud-associate-engineer-notes-gcp-ace-8d2260cb3882
+https://github.com/sathishvj/awesome-gcp-certifications/blob/master/associate-cloud-engineer.md
+https://hackmd.io/@lucian2023/BkLoxHRhj
+https://pbedn.github.io/post/2021-01-19-gcp-ace-exam-summary/
+https://myblockchainexperts.org/2019/09/27/gcp-associate-cloud-engineer-deep-dive-notes-preparing-for-the-exam/#google_vignette
+https://gcloud.devoteam.com/blog/from-zero-to-associate-cloud-engineer-a-complete-guide/
