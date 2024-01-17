@@ -1,46 +1,85 @@
-<center>Click on below table cell to find its value.
-    <br />
-    <br />
-</center>
-<table align="center" id="tblMain" border="1" style="cursor: pointer;">
-    <tr>
-        <td>R1C1</td>
-        <td>R1C2</td>
-        <td>R1C3</td>
-        <td>R1C4</td>
-    </tr>
-    <tr>
-        <td>R2C1</td>
-        <td>R2C2</td>
-        <td>R2C3</td>
-        <td>R2C4</td>
-    </tr>
-    <tr>
-        <td>R3C1</td>
-        <td>R3C2</td>
-        <td>R3C3</td>
-        <td>R3C4</td>
-    </tr>
-    <tr>
-        <td>R4C1</td>
-        <td>R4C2</td>
-        <td>R4C3</td>
-        <td>R4C44</td>
-    </tr>
-</table>
-<div id=result></div>
-<div id=result2></div>
-<br />
-  <h3>
-    Click the button to create an HTML table. Next, click any cell in the 2nd column to see the value.
-  </h3>
-
-  <input type='button' 
-         onclick='tableFromJson()' id='bt'
-         value='Create a Table' />
-
-  <p id='showData'></p>
+<html>
+<body onload=generateTable()>
+<div id=dynamictable align=left></div>
+<div id=result2 align=right></div>
 <script>
+var tablecontent="";
+let services=[
+["Cloud","ServiceType","service","Description","used for","command"],
+["GCP","Compute","ComputeEngine","","",""],
+["GCP","Compute","KubernetesEngine","","",""],
+["GCP","Compute","AppEngine","","",""],
+["GCP","Compute","CloudFunctions","","",""],
+["GCP","Management","Cloud Console","","",""],
+["GCP","Management","Stack Driver","","",""],
+["GCP","Management","Trace","","",""],
+["GCP","Management","Logging","","",""],
+["GCP","Management","Debugger","","",""],
+["GCP","Management","Monitoring","","",""],
+["GCP","Networking","CloudLoadBalancing","","",""],
+["GCP","Networking","Cloud CDN","","",""],
+["GCP","Networking","Cloud DNS","","",""],
+["GCP","Networking","Firewall Rules","","",""],
+["GCP","Networking","Cloud Interconnect","","",""],
+["GCP","Networking","Clou VPN","","",""],
+["GCP","Storage_Databases","Cloud BigTable","","",""],
+["GCP","Storage_Databases","Cloud DataStore","","",""],
+["GCP","Storage_Databases","Cloud Spanner","","",""],
+["GCP","Storage_Databases","Cloud SQL","","",""],
+["GCP","Storage_Databases","Cloud Storage","","",""],
+["GCP","BigData","BigQuery","","",""],
+["GCP","BigData","Cloud DataFlow","","",""],
+["GCP","BigData","Cloud Datarep","","",""],
+["GCP","BigData","CloudDataProc","","",""],
+["GCP","BigData","Cloud IOT core","","",""],
+["GCP","BigData","Cloud Pub/Sub","","",""],
+["GCP","Identity_Security","Cloud IAM","","",""],
+["GCP","Identity_Security","Cloud End points","","",""],
+["GCP","Identity_Security","VPC","","",""],
+["GCP","Identity_Security","Identiry Aware Proxy","","",""],
+["GCP","Identity_Security","KMS","","",""],
+["GCP","Identity_Security","DataLoss Prevention","","",""],
+["GCP","MachineLearning","Cloud ML","","",""],
+["GCP","MachineLearning","NaturalLanguageAPI","","",""],
+["GCP","MachineLearning","CloudSpeechAPI","","",""],
+["GCP","MachineLearning","CloudVisionAPI","","",""],
+["GCP","MachineLearning","CloudTranslateAPI","","",""],
+];
+function generateTable()
+{
+var table = document.createElement('table');
+table.style.border = "1px solid"
+for (let i = 0, l1 = services.length; i < l1; i++) {
+	//tablecontent = tablecontent + "<tr>";
+	var tr = document.createElement('tr');
+    // This loop is for inner-arrays
+    for (let j = 0, l2 = services[i].length; j < l2; j++) {
+		//var text = document.createTextNode(services[i][j]);
+		var td = document.createElement('td');
+		td.innerHTML=services[i][j];
+		td.addEventListener( 'mouseover', function ( event ) {
+		console.log(services[i][j])
+		document.getElementById("result2").innerText=services[i][j]
+} );
+  
+		//td.onclick= //document.getElementById("result").innerText=this.innerHTML
+		//td.appendChild(text);
+		tr.appendChild(td);
+        // Accessing each elements of inner-array
+        //console.log( services[i][j] ); 
+		//tablecontent= tablecontent+ "<td>"+services[i][j]+"</td>"
+    }
+	
+	//tablecontent = tablecontent + "</tr>";
+	table.appendChild(tr);
+}
+//console.log(tablecontent);
+//table.appendChild(tr);
+var divarea= document.getElementById("dynamictable");
+divarea.appendChild(table);
+}
+
+
 var tbl = document.getElementById("tblMain");
 if (tbl != null) {
     for (var i = 0; i < tbl.rows.length; i++) {
@@ -53,80 +92,17 @@ if (tbl != null) {
 					var table = document.getElementById("tblMain"); 
   var cells = table.getElementsByTagName("td"); 
  
-  for (var i = 0; i < cells.length; i++) { 
+  //for (var i = 0; i < cells.length; i++) { 
     var cellValue = cells[i].innerHTML; // or cells[i].textContent 
     console.log(cellValue); 
-	document.getElementById("result").innerText= cellValue;
+	//document.getElementById("result").innerText= this.innerHTML;
 				document.getElementById("result2").innerText= cellValue;
-  } 
+  //} 
                 };
             }(i, j));
         }
     }
 }
 </script>
-<script>
-  let tableFromJson = () => {
-    // the json data.
-    const birds = [
-        {"ID": "001", "Bird": "Eurasian Collared-Dove"},
-        {"ID": "002", "Bird": "Bald Eagle"},
-        {"ID": "003", "Bird": "Cooper's Hawk"},
-    ];
-
-    let col = [];
-    for (let i = 0; i < birds.length; i++) {
-      for (let key in birds[i]) {
-        if (col.indexOf(key) === -1) {
-          col.push(key);
-        }
-      }
-    }
-
-    const table = document.createElement("table");
-    let tr = table.insertRow(-1);               // table row.
-
-    for (let i = 0; i < col.length; i++) {
-      let th = document.createElement("th");      // table header.
-      th.innerHTML = col[i];
-      tr.appendChild(th);
-    }
-
-    for (let i = 0; i < birds.length; i++) {
-      tr = table.insertRow(-1);
-
-      for (let j = 0; j < col.length; j++) {
-        let tabCell = tr.insertCell(-1);
-        tabCell.innerHTML = birds[i][col[j]];
-        if (col[j] === 'Bird') {
-          tabCell.setAttribute('id', 'br_' + birds[i][col[j]]);
-          
-          // ATTACH onclick event.
-          tabCell.setAttribute('onclick', 'alert(this.innerHTML)');
-		  update()
-		  //getValue()
-        }
-      }
-    }
-
-    // Add table.
-    const div = document.getElementById('showData');
-    div.innerHTML = "";
-    div.appendChild(table);
-  }
-  function update()
-  {
-  alert('hi');
-  }
-  function getValue() { 
-  var table = document.getElementById("tblMain"); 
-  var cells = table.getElementsByTagName("td"); 
- 
-  for (var i = 0; i < cells.length; i++) { 
-    var cellValue = cells[i].innerHTML; // or cells[i].textContent 
-    console.log(cellValue); 
-	document.getElementById("result").innerText= cellValue;
-				document.getElementById("result2").innerText= cellValue;
-  } 
-} 
-</script>
+</body>
+</html>
