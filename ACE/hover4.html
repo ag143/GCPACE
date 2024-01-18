@@ -1,7 +1,7 @@
 <html>
 <body onload=generateTable()>
-<div id=dynamictable align=left></div>
-<div id=result2 align=right></div>
+<div id=dynamictable width=50%></div>
+<div id=result2 width=50%></div>
 <script>
 var tablecontent="";
 let services=[
@@ -57,6 +57,9 @@ for (let i = 0, l1 = services.length; i < l1; i++) {
 		//var text = document.createTextNode(services[i][j]);
 		var td = document.createElement('td');
 		td.innerHTML=services[i][j];
+		var img=document.createElement("img");
+		img.src = "svg\\Compute-Engine.svg"
+		td.appendChild(img);
 		td.addEventListener( 'mouseover', function ( event ) {
 		console.log(services[i][j])
 		document.getElementById("result2").innerText=services[i][j]
