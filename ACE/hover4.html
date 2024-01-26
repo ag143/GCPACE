@@ -2,10 +2,13 @@
 <html>
 <body onload=generateTable()>
 <div>
-<div id="dynamictable" style="float:left"></div>
-<div id="service"  style="float:left,border: 2px solid black";></div>
-<div id="description"  style="float:left,border: 2px solid black";></div>
-<div id="usedfor"  style="float:left,border: 2px solid black";></div>
+<div id="dynamictable" style="float:right"></div>
+<table border=5>
+<tr><td id="service"></td></tr>
+<tr><td id="description"></td></tr>
+<tr><td id="usedfor"></td></tr>
+</table>
+ 
 </div>
 <script>
 var tablecontent="";
@@ -51,21 +54,42 @@ let services=[
 ["GCP","MachineLearning","CloudVisionAPI","AutoML-Vision.svg","Vision API offers powerful pre-trained machine learning models through REST and RPC APIs. ","",""],
 ["GCP","MachineLearning","CloudTranslateAPI","Cloud-Translation-API.svg","Cloud Translation API uses Google;s neural machine translation technology to let you dynamically translate text through the API using a Google pre-trained or custom model.","",""]
 ];
-
+var servicelegend = document.createElement('legend');
+servicelegend.innerHTML= "Service Area";
+//servicelegend.text= "ICON";
+var descriptionlegend = document.createElement('legend');
+descriptionlegend.innerHTML= "Description Area";
+//descriptionlegend.text= "ICON";
+var usedForlegend = document.createElement('legend');
+usedForlegend.innerHTML= "UsedforArea";
+//usedForlegend.text= "ICON";
 function updatediv()
 {
+var newElem = document.createElement("BR");
+var ServiceArea = document.getElementById("service");
+var DescriptionArea = document.getElementById("description");
+var UsedforArea = document.getElementById("usedfor");
 for (let i = 0, l1 = services.length; i < l1; i++) {
 if(services[i][2] == document.getElementById("description").innerText){
 console.log(services[i][4] + "-->update");
+
 document.getElementById("service").innerText = services[i][3];
 document.getElementById("service").style.wordwrap="break-word"; 
-document.getElementById("service").style= "border-bottom: 4px solid blue;";
+//document.getElementById("service").style= "border-bottom: 4px solid blue;";
+//ServiceArea.appendChild(servicelegend);
+//ServiceArea.insertBefore(newElem);
 document.getElementById("description").innerText = services[i][4];
 document.getElementById("description").style.wordwrap="break-word"; 
-document.getElementById("description").style= "border-bottom: 4px solid blue;";
+//document.getElementById("description").style= "border-bottom: 4px solid blue;";
+//ServiceArea.insertBefore(newElem);
+//DescriptionArea.appendChild(descriptionlegend);
 document.getElementById("usedfor").innerText = services[i][5];
 document.getElementById("usedfor").style.wordwrap="break-word"; 
-document.getElementById("usedfor").style= "border-bottom: 4px solid blue;";
+//document.getElementById("usedfor").style= "border-bottom: 4px solid blue";
+//ServiceArea.insertBefore(newElem);
+//UsedforArea.appendChild(usedForlegend);
+
+
 }
 }
 }
@@ -73,6 +97,7 @@ document.getElementById("usedfor").style= "border-bottom: 4px solid blue;";
 function generateTable()
 {
 var table = document.createElement('table');
+
 table.style.display= "inline-block";
 table.style.border = "5px solid"
 for (let i = 0, l1 = services.length; i < l1; i++) {
@@ -110,6 +135,7 @@ for (let i = 0, l1 = services.length; i < l1; i++) {
 //table.appendChild(tr);
 var divarea= document.getElementById("dynamictable");
 divarea.appendChild(table);
+divarea.appendChild(iconlegend);
 }
 
 
