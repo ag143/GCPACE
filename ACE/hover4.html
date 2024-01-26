@@ -2,8 +2,9 @@
 <html>
 <body onload=generateTable()>
 <div>
-<div id=dynamictable style="display: inline-block,align:left";></div>
-<div id=result2  style="display: flex,align:right";></div>
+<div id=dynamictable style="float:left"></div>
+<div id=result2  style="float:left,width:20%,border: 2px solid black";></div>
+<div id=result3  style="float:left,width:40%,border: 2px solid black";></div>
 </div>
 <script>
 var tablecontent="";
@@ -49,6 +50,19 @@ let services=[
 ["GCP","MachineLearning","CloudVisionAPI","AutoML-Vision.svg","Vision API offers powerful pre-trained machine learning models through REST and RPC APIs. ","",""],
 ["GCP","MachineLearning","CloudTranslateAPI","Cloud-Translation-API.svg","Cloud Translation API uses Google;s neural machine translation technology to let you dynamically translate text through the API using a Google pre-trained or custom model.","",""]
 ];
+
+function updatediv()
+{
+for (let i = 0, l1 = services.length; i < l1; i++) {
+if(services[i][2] == document.getElementById("result2").innerText){
+console.log(services[i][4] + "-->update");
+document.getElementById("result3").innerText = services[i][4];
+document.getElementById("result3").style.wordwrap="break-word"; 
+document.getElementById("result3").style.border= "2px solid black";
+}
+}
+}
+
 function generateTable()
 {
 var table = document.createElement('table');
@@ -58,7 +72,7 @@ for (let i = 0, l1 = services.length; i < l1; i++) {
 	//tablecontent = tablecontent + "<tr>";
 	var tr = document.createElement('tr');
     // This loop is for inner-arrays
-    for (let j = 0, l2 = services[i].length; j <l2 ; j++) {
+    for (let j = 0, l2 = services[i].length; j <4 ; j++) {
 		//var text = document.createTextNode(services[i][j]);
 		var td = document.createElement('td');
 		td.style.border="1px solid";
@@ -71,6 +85,7 @@ for (let i = 0, l1 = services.length; i < l1; i++) {
 		td.addEventListener( 'mouseover', function ( event ) {
 		console.log(services[i][j])
 		document.getElementById("result2").innerText=services[i][j]
+		updatediv();
 } );
   
 		//td.onclick= //document.getElementById("result").innerText=this.innerHTML
@@ -108,6 +123,8 @@ if (tbl != null) {
     console.log(cellValue); 
 	//document.getElementById("result").innerText= this.innerHTML;
 				document.getElementById("result2").innerText= cellValue;
+				console.log(cellValue)
+				
   //} 
                 };
             }(i, j));
