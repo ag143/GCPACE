@@ -2,17 +2,18 @@
 <html>
 <body onload=generateTable()>
 <div>
-<div id=dynamictable style="float:left"></div>
-<div id=result2  style="float:left,width:20%,border: 2px solid black";></div>
-<div id=result3  style="float:left,width:40%,border: 2px solid black";></div>
+<div id="dynamictable" style="float:left"></div>
+<div id="service"  style="float:left,border: 2px solid black";></div>
+<div id="description"  style="float:left,border: 2px solid black";></div>
+<div id="usedfor"  style="float:left,border: 2px solid black";></div>
 </div>
 <script>
 var tablecontent="";
 let services=[
 ["Cloud","ServiceType","service","icon","Description","used for","command"],
-["GCP","Compute","ComputeEngine","Compute-Engine.svg","Compute Engine offers scalable and flexible virtual machine computing capabilities in the cloud; with options to utilize certain CPUs; GPUs; or Cloud TPUs. You can use Compute Engine to solve large-scale processing and analytic problems on Google;s computing; storage;and networking infrastructure.","",""],
+["GCP","Compute","ComputeEngine","Compute-Engine.svg","Compute Engine offers scalable and flexible virtual machine computing capabilities in the cloud; with options to utilize certain CPUs; GPUs; or Cloud TPUs. You can use Compute Engine to solve large-scale processing and analytic problems on Google;s computing; storage;and networking infrastructure.","usedfor",""],
 ["GCP","Compute","KubernetesEngine","Google-Kubernetes-Engine.svg","Orchestrate containerized microservices on Kubernetes","",""],
-["GCP","Compute","AppEngine","App-Engine.svg","Build highly scalable applications on a fully managed platform using open and familiar languages and tools","",""],
+["GCP","Compute","AppEngine","App-Engine.svg","Build highly scalable applications on a fully managed platform using open and familiar languages and tools","usedfor",""],
 ["GCP","Compute","CloudFunctions","Cloud-Functions.svg","Build event driven applications using simple; single-purpose functions","",""],
 ["GCP","Compute","Cloud Run","Develop and deploy highly scalable containerized applications.Does NOT need a cluster","",""],
 ["GCP","Management","Cloud Console","The Google Cloud console helps you deploy; scale; and diagnose production issues in a simple web-based interface. Search to quickly find resources and connect to instances via SSH in the browser. Handle DevOps workflows on the go with powerful native iOS and Android applications","",""],
@@ -54,11 +55,17 @@ let services=[
 function updatediv()
 {
 for (let i = 0, l1 = services.length; i < l1; i++) {
-if(services[i][2] == document.getElementById("result2").innerText){
+if(services[i][2] == document.getElementById("description").innerText){
 console.log(services[i][4] + "-->update");
-document.getElementById("result3").innerText = services[i][4];
-document.getElementById("result3").style.wordwrap="break-word"; 
-document.getElementById("result3").style.border= "2px solid black";
+document.getElementById("service").innerText = services[i][3];
+document.getElementById("service").style.wordwrap="break-word"; 
+document.getElementById("service").style= "border-bottom: 4px solid blue;";
+document.getElementById("description").innerText = services[i][4];
+document.getElementById("description").style.wordwrap="break-word"; 
+document.getElementById("description").style= "border-bottom: 4px solid blue;";
+document.getElementById("usedfor").innerText = services[i][5];
+document.getElementById("usedfor").style.wordwrap="break-word"; 
+document.getElementById("usedfor").style= "border-bottom: 4px solid blue;";
 }
 }
 }
@@ -84,7 +91,7 @@ for (let i = 0, l1 = services.length; i < l1; i++) {
 		td.appendChild(img);
 		td.addEventListener( 'mouseover', function ( event ) {
 		console.log(services[i][j])
-		document.getElementById("result2").innerText=services[i][j]
+		document.getElementById("description").innerText=services[i][j]
 		updatediv();
 } );
   
@@ -113,7 +120,7 @@ if (tbl != null) {
             tbl.rows[i].cells[j].onmouseover = (function (i, j) {
                 return function () {
 				//document.getElementById("result").innerText= (i + 1);
-//				document.getElementById("result2").innerText= (j + 1);
+//				document.getElementById("description").innerText= (j + 1);
                     //alert('R' + (i + 1) + 'C' + (j + 1));
 					var table = document.getElementById("tblMain"); 
   var cells = table.getElementsByTagName("td"); 
@@ -122,7 +129,7 @@ if (tbl != null) {
     var cellValue = cells[i].innerHTML; // or cells[i].textContent 
     console.log(cellValue); 
 	//document.getElementById("result").innerText= this.innerHTML;
-				document.getElementById("result2").innerText= cellValue;
+				document.getElementById("description").innerText= cellValue;
 				console.log(cellValue)
 				
   //} 
