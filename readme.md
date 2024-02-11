@@ -1,6 +1,7 @@
 # Associate Cloud Engineer
 ### What is Cloud Computing?
 #### https://ag143.github.io/GCPACE/host.html
+#### [https://ag143.github.io/GCPACE//ACE/GCPACE_slides.md](https://github.com/ag143/GCPACE/blob/main/ACE/28minGCPACE/gcpace28min.md)
 The delivery of a shared pool of on-demand computing services over the public internet that can be rapidly provisioned and released with minimal management effort or service provider interaction.
 ### The 5 characteristics of Cloud:
 1. On-demand Self Service
