@@ -1,0 +1,256 @@
+
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <body>
+  <script src="https://unpkg.com/gojs@2.3.16/release/go.js"></script>
+   
+  <div id="allSampleContent" class="p-4 w-full">
+    <script id="code">
+    function init() {
+
+      // Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
+      // For details, see https://gojs.net/latest/intro/buildingObjects.html
+      const $ = go.GraphObject.make;  // for conciseness in defining templates
+
+      myDiagram =
+        new go.Diagram("myDiagramDiv",  // must name or refer to the DIV HTML element
+          {
+            allowCopy: false,
+            allowDelete: false,
+            draggingTool: $(CustomDraggingTool),
+            layout: $(CustomLayout),
+            // enable undo & redo
+            "undoManager.isEnabled": true
+          });
+
+      // define the Node template
+      myDiagram.nodeTemplate =
+        $(go.Node, "Auto",
+          new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+          // define the node's outer shape, which will surround the TextBlock
+          $(go.Shape, "RoundedRectangle",
+            {
+              fill: "rgb(254, 201, 0)", stroke: "black", parameter1: 20,  // the corner has a large radius
+              portId: "", fromSpot: go.Spot.AllSides, toSpot: go.Spot.AllSides
+            }),
+          $(go.TextBlock,
+            new go.Binding("text", "text").makeTwoWay())
+        );
+
+      myDiagram.nodeTemplateMap.add("Super",
+        $(go.Node, "Auto",
+          { locationObjectName: "BODY" },
+          $(go.Shape, "RoundedRectangle",
+            {
+              fill: "rgba(128, 128, 64, 0.5)", strokeWidth: 1.5, parameter1: 20,
+              spot1: go.Spot.TopLeft, spot2: go.Spot.BottomRight, minSize: new go.Size(30, 30)
+            }),
+          $(go.Panel, "Vertical",
+            { margin: 10 },
+            $(go.TextBlock,
+              { font: "bold 10pt sans-serif", margin: new go.Margin(0, 0, 5, 0) },
+              new go.Binding("text")),
+            $(go.Shape,
+              { name: "BODY", opacity: 0 })
+          )
+        ));
+
+      // replace the default Link template in the linkTemplateMap
+      myDiagram.linkTemplate =
+        $(go.Link,  // the whole link panel
+          { routing: go.Link.Orthogonal, corner: 10 },
+          $(go.Shape,  // the link shape
+            { strokeWidth: 1.5 }),
+          $(go.Shape,  // the arrowhead
+            { toArrow: "Standard", stroke: null })
+        );
+
+      // read in the JSON-format data from the "mySavedModel" element
+      load();
+    }
+
+  // A custom layout that sizes each "Super" node to be big enough to cover all of it member nodes
+  class CustomLayout extends go.Layout {
+    doLayout(coll) {
+      coll = this.collectParts(coll);
+
+      const supers = new go.Set(/*go.Node*/);
+      coll.each(p => {
+        if (p instanceof go.Node && p.category === "Super") supers.add(p);
+      });
+
+      function membersOf(sup, diag) {
+        const set = new go.Set(/*go.Part*/);
+        const arr = sup.data._members;
+        for (let i = 0; i < arr.length; i++) {
+          const d = arr[i];
+          set.add(diag.findNodeForData(d));
+        }
+        return set;
+      }
+
+      function isReady(sup, supers, diag) {
+        const arr = sup.data._members;
+        for (let i = 0; i < arr.length; i++) {
+          const d = arr[i];
+          if (d.category !== "Super") continue;
+          const n = diag.findNodeForData(d);
+          if (supers.has(n)) return false;
+        }
+        return true;
+      }
+
+      // implementations of doLayout that do not make use of a LayoutNetwork
+      // need to perform their own transactions
+      this.diagram.startTransaction("Custom Layout");
+
+      while (supers.count > 0) {
+        let ready = null;
+        const it = supers.iterator;
+        while (it.next()) {
+          if (isReady(it.value, supers, this.diagram)) {
+            ready = it.value;
+            break;
+          }
+        }
+        supers.remove(ready);
+        const b = this.diagram.computePartsBounds(membersOf(ready, this.diagram));
+        ready.location = b.position;
+        const body = ready.findObject("BODY");
+        if (body) body.desiredSize = b.size;
+      }
+
+      this.diagram.commitTransaction("Custom Layout");
+    }
+  }
+  // end CustomLayout
+
+
+  // Define a custom DraggingTool
+  class CustomDraggingTool extends go.DraggingTool {
+    moveParts(parts, offset, check) {
+      super.moveParts(parts, offset, check);
+      this.diagram.layoutDiagram(true);
+    }
+
+    computeEffectiveCollection(parts) {
+      const coll = new go.Set(/*go.Part*/).addAll(parts);
+      parts.each(p => this.walkSubTree(p, coll));
+      return super.computeEffectiveCollection(coll);
+    };
+
+    // Find other attached nodes.
+    walkSubTree(sup, coll) {
+      if (sup === null) return;
+      coll.add(sup);
+      if (sup.category !== "Super") return;
+      // recurse through this super state's members
+      const model = this.diagram.model;
+      const mems = sup.data._members;
+      if (mems) {
+        for (let i = 0; i < mems.length; i++) {
+          const mdata = mems[i];
+          this.walkSubTree(this.diagram.findNodeForData(mdata), coll);
+        }
+      }
+    }
+  }
+  // end CustomDraggingTool class
+
+    // Show the diagram's model in JSON format
+    function save() {
+      document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+      myDiagram.isModified = false;
+    }
+    function load() {
+      myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+
+      // make sure all data have up-to-date "members" collections
+      // this does not prevent any "cycles" of membership, which would result in undefined behavior
+      const arr = myDiagram.model.nodeDataArray;
+      for (let i = 0; i < arr.length; i++) {
+        const data = arr[i];
+        const supers = data.supers;
+        if (supers) {
+          for (let j = 0; j < supers.length; j++) {
+            const sdata = myDiagram.model.findNodeDataForKey(supers[j]);
+            if (sdata) {
+              // update _supers to be an Array of references to node data
+              if (!data._supers) {
+                data._supers = [sdata];
+              } else {
+                data._supers.push(sdata);
+              }
+              // update _members to be an Array of references to node data
+              if (!sdata._members) {
+                sdata._members = [data];
+              } else {
+                sdata._members.push(data);
+              }
+            }
+          }
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+
+<div id="sample">
+  <div id="myDiagramDiv" style="border: 1px solid black; width: 100%; height: 400px; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><canvas tabindex="0" width="1054" height="398" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1054px; height: 398px;"></canvas><div style="position: absolute; overflow: auto; width: 1054px; height: 398px; z-index: 1;"><div style="position: absolute; width: 1px; height: 1px;"></div></div></div>
+   
+
+  <button id="SaveButton" onclick="save()">Save</button>
+  <button onclick="load()">Load</button>
+  Diagram Model saved in JSON format:
+  <br>
+  <textarea id="mySavedModel" style="width:100%;height:300px">
+  { "class": "go.GraphLinksModel",
+  "nodeDataArray": [
+    { "key": -1, "text": "GCP", "category": "Super" },
+    { "key": -2, "text": "Region", "category": "Super", "supers": [-1] },
+    { "key": -3, "text": "Zone", "category": "Super" },
+    { "key": -4, "text": "Compute", "category": "Super" },
+    { "key": -5, "text": "Networking", "category": "Super" },
+    { "key": -6, "text": "Storage_Database", "category": "Super" },
+    { "key": -7, "text": "Identity_Security", "category": "Super" },
+
+    { "key": 1, "loc": "100 100", "text": "Starting.End", "supers": [-2] },
+    { "key": 2, "loc": "250 100", "text": "Running", "supers": [-2] },
+    { "key": 3, "loc": "100 200", "text": "Starting.Init", "supers": [-1, -3] },
+    { "key": 4, "loc": "250 200", "text": "Washing", "supers": [-1, -3] },
+    { "key": 5, "loc": "100 300", "text": "Stopped", "supers": [-3] },
+    { "key": 6.1, "loc": "250 300", "text": "ComputeEngine", "supers": [-4] },
+	{ "key": 6.2, "loc": "250 320", "text": "AppEngine", "supers": [-4] },
+	{ "key": 6.3, "loc": "250 340", "text": "ContainerEngine", "supers": [-4] },
+	{ "key": 6.4, "loc": "250 360", "text": "ContainerRegistry", "supers": [-4] },
+	{ "key": 6.4, "loc": "250 380", "text": "CloudFunctions", "supers": [-4] },
+	{ "key": 7.1, "loc": "260 400", "text": "Cloud_virtual_Network", "supers": [-4] },
+	{ "key": 7.2, "loc": "260 420", "text": "Cloud_Load_balancing", "supers": [-4] },
+	{ "key": 7.3, "loc": "260 440", "text": "CloudCDN", "supers": [-4] },
+	{ "key": 7.4, "loc": "260 460", "text": "Cloud_InterConnect", "supers": [-4] },
+	{ "key": 7.5, "loc": "260 480", "text": "CloudDNS", "supers": [-4] },
+	{ "key": 8.1, "loc": "270 500", "text": "CloudStorage", "supers": [-6] },
+	{ "key": 8.1, "loc": "270 520", "text": "CloudBigTable", "supers": [-6] },
+	{ "key": 8.2, "loc": "270 540", "text": "CloudDataStore", "supers": [-6] },
+	{ "key": 8.3, "loc": "270 560", "text": "CloudSQL", "supers": [-6] },
+	{ "key": 8.5, "loc": "270 580", "text": "PersistentDisk", "supers": [-6] },
+	{ "key": 9.1,"loc": "280 600", "text": "IAM", "supers": [-7] },
+	{ "key": 9.2,"loc": "280 620", "text": "CloudResourceManager", "supers": [-7] },
+	{ "key": 10, "loc": "290 60", "text": "Stopffffping", "supers": [-7] }
+	
+  ],
+  "linkDataArray": [
+    { "from":  1, "to": 2 },
+    { "from":  3, "to": 1 },
+    { "from":  4, "to": 2 },
+    { "from": -2, "to": 4 },
+    { "from":  5, "to": 3 },
+    { "from":  6, "to": 5 },
+    { "from": -1, "to": 5 }
+  ]
+}
+
+</textarea>
+  </body>
+  </html>
