@@ -1,6 +1,3 @@
-
-
-
   <!DOCTYPE html>
   <html lang="en">
   <body>
@@ -206,52 +203,43 @@
   Diagram Model saved in JSON format:
   <br>
   <textarea id="mySavedModel" style="width:100%;height:300px">
-  { "class": "go.GraphLinksModel",
+ { "class": "GraphLinksModel",
   "nodeDataArray": [
-    { "key": -1, "text": "GCP", "category": "Super" },
-	{ "key": -10, "text": "VPC", "category": "Super", "supers": [-1] },
-	{ "key": -7, "text": "Identity_Security", "category": "Super" , "supers": [-3]},
-    { "key": -2, "text": "Region1", "category": "Super", "supers": [-10] },
-    { "key": -3, "text": "Zone1", "category": "Super", "supers": [-2] },
-	{ "key": -4, "text": "Compute", "category": "Super" , "supers": [-7]},
-	{ "key": -11, "text": "ComputeEngine", "category": "Super", "supers": [-4] },
-    { "key": -5, "text": "Networking", "category": "Super", "supers": [-7] },
-    { "key": -6, "text": "Storage_Database", "category": "Super" , "supers": [-7]},
-    
-	{ "key": -8, "text": "Zone2", "category": "Super", "supers": [-2] },
-	{ "key": -9, "text": "Region2", "category": "Super", "supers": [-1] },
-	
-	
-	
+{"key":-1,"text":"GCP","category":"Super"},
+{"key":-10,"text":"VPC","category":"Super","supers":[-1]},
+{"key":-7,"text":"Identity_Security","category":"Super","supers":[-3]},
+{"key":-2,"text":"Region1","category":"Super","supers":[-10]},
+{"key":-3,"text":"Zone1","category":"Super","supers":[-2]},
+{"key":-4,"text":"Compute","category":"Super","supers":[-7]},
+{"key":-11,"text":"ComputeEngine","category":"Super","supers":[-4]},
+{"key":-8,"text":"Zone2","category":"Super","supers":[-2]},
+{"key":-9,"text":"Region2","category":"Super","supers":[-10]},
+{"key":-13,"text":"Storage","category":"Super","supers":[-7]},
+{"key":-14,"text":"Database","category":"Super","supers":[-7]},
+{"key":-15,"text":"SQL","category":"Super","supers":[-14]},
+{"key":-16,"text":"NOSQL","category":"Super","supers":[-14]},
+{"key":-17,"text":"CloudStore","category":"Super","supers":[-13]},
+{"key":-12,"text":"AWS","category":"Super"},
+{"key":4.2,"loc":"671.0000000000001 -42.00000000000006","text":"Resources","supers":[-8]},
+{"key":-28,"loc":"819.0000000000009 -113","text":"Zones","supers":[-9]},
+{"key":-29,"loc":"1225.9999999999982 33.00000000000005","text":"AWS Resources","supers":[-12]},
+{"key":-30,"loc":"-2 1","text":"Preemptible VMS","supers":[-11]},
+{"key":-31,"loc":"-16 88","text":"Instance Templates","supers":[-11]},
+{"key":-32,"loc":"-24 47","text":"Managed Instance Groups","supers":[-11]},
+{"key":-22,"loc":"519.9999999999991 -22.99999999999998","text":"FileStore","supers":[-13]},
+{"key":-23,"loc":"339.99999999999955 20.000000000000043","text":"CloudSQL","supers":[-15]},
+{"key":-26,"loc":"339.99999999999955 80.00000000000013","text":"CloudSpanner","supers":[-15]},
+{"key":-24,"loc":"210 -1","text":"BigTable","supers":[-16]},
+{"key":-27,"loc":"210 49","text":"DataStore","supers":[-16]},
+{"key":-33,"loc":"210 99","text":"FireStore","supers":[-16]},
+{"key":-34,"loc":"210 149","text":"MemoryStore","supers":[-16]},
+{"key":-35,"loc":"517.9999999999986 55.000000000000036","text":"Standard","supers":[-17]},
+{"key":-36,"loc":"516.9999999999982 94.00000000000017","text":"Nearline","supers":[-17]},
+{"key":-37,"loc":"522.9999999999984 135.00000000000003","text":"Codeline","supers":[-17]},
+{"key":-38,"loc":"526.9999999999989 176.9999999999997","text":"Archive","supers":[-17]}
+],
+  "linkDataArray": [{"from":-1,"to":-12}]}
 
-    
-    
-	{ "key": 1.2, "loc": "100 150", "text": "AppEngine", "supers": [-11] },
-	{ "key": 1.3, "loc": "100 200", "text": "ContainerEngine", "supers": [-11] },
-	{ "key": 1.4, "loc": "100 250", "text": "ContainerRegistry", "supers": [-11] },
-	{ "key": 1.4, "loc": "100 300", "text": "CloudFunctions", "supers": [-11] },
-	{ "key": 2.1, "loc": "300 400", "text": "Cloud_virtual_Network", "supers": [-5] },
-	{ "key": 2.2, "loc": "300 450", "text": "Cloud_Load_balancing", "supers": [-5] },
-	{ "key": 2.3, "loc": "300 500", "text": "CloudCDN", "supers": [-5] },
-	{ "key": 2.4, "loc": "300 550", "text": "Cloud_InterConnect", "supers": [-5] },
-	{ "key": 2.5, "loc": "300 600", "text": "CloudDNS", "supers": [-5] },
-	{ "key": 3.1, "loc": "100 400", "text": "CloudStorage", "supers": [-6] },
-	{ "key": 3.1, "loc": "100 450", "text": "CloudBigTable", "supers": [-6] },
-	{ "key": 3.2, "loc": "100 500", "text": "CloudDataStore", "supers": [-6] },
-	{ "key": 3.3, "loc": "100 550", "text": "CloudSQL", "supers": [-6] },
-	{ "key": 3.5, "loc": "100 600", "text": "PersistentDisk", "supers": [-6] },
-	{ "key": 4.1,"loc": "300 100", "text": "IAM", "supers": [-7] },
-	{ "key": 4.2,"loc": "300 150", "text": "CloudResourceManager", "supers": [-7] },
-	{ "key": 4.2,"loc": "500 20", "text": "Resources", "supers": [-8] },
-	{ "key": 4.2,"loc": "700 -10", "text": "Zones", "supers": [-9] },
-	{ "key": 4.2,"loc": "700 -10", "text": "Subnet", "supers": [-10] }
-	
-  ],
-  "linkDataArray": [
-    { "from":  1, "to": 1 }
-     
-  ]
-}
 
 </textarea>
   </body>
