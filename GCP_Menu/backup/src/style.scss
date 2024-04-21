@@ -1,0 +1,134 @@
+@mixin transition($time){
+  -webkit-transition: all $time linear;
+  -moz-transition: all $time linear;
+  -o-transition: all $time linear;
+  transition: all $time linear;
+}
+
+$font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";;
+
+$primary-color: #ecf0f1; //#f1c40f
+$text-color: #2e2e2e;
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: $font-family;
+  font-size: 14px;
+  line-height: 16px;
+  color: $text-color;
+  background-color: #eee;
+}
+
+.sidebar-navigation{
+  webkit-box-shadow: 3px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 3px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 3px 5px 10px 0px rgba(0, 0, 0, 0.16);
+    position: fixed;
+    z-index: 400;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+    width: 256px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+  
+  .title{
+    display: block;
+    font-size: 14px;
+    line-height: 16px;
+    background-color: #fff;
+    align-items: center;
+    font-weight: 600;
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  ul{
+    margin: 0;
+    padding: 0;
+    li{
+      display: block;
+      a{
+        position: relative;
+        display: block;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        color: $text-color;
+        @include transition(.3s);
+        
+        em{
+          font-size: 24px;
+          position: absolute;
+          right: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+          padding: 5px;
+          border-radius: 50%
+        }
+      }
+      
+      &:hover,
+      &.selected{
+        > a{
+          background-color: rgba(0,0,0,.06);
+        }
+      }
+      
+      ul{
+        display: none;
+        li {
+          font-weight: 400;
+        }
+        
+        &.open{display: block}
+        li{
+          a{
+            color: darken($primary-color, 60%);
+            border-color: rgba(white, .1);
+            font-weight: 400;
+          }
+          &:hover,
+          &.selected{
+            > a{
+              background-color: darken($primary-color, 2%);
+              
+              &:before{margin-right: 10px}
+            }
+          }
+          
+          &.selected.selected--last{
+            > a{
+              background-color: darken($primary-color, 30%);
+              color: #fff;
+              &:before{background-color: #fff}
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+$colour1: lighten($primary-color, 5%);
+$colour2: lighten($primary-color, 10%);
+$colour3: lighten($primary-color, 15%);
+$colour4: lighten($primary-color, 20%);
+$colour5: lighten($primary-color, 25%);
+$colour6: lighten($primary-color, 30%);
+$colour7: lighten($primary-color, 35%);
+$colour8: lighten($primary-color, 40%);
+$colour9: lighten($primary-color, 45%);
+$colour10: lighten($primary-color, 50%);
+
+$colors: $colour1, $colour2, $colour3, $colour4, $colour5, $colour6, $colour7, $colour8, $colour9, $colour10;
+
+@each $colour in $colors {
+    $i: index($colors, $colour);
+    .subMenuColor#{$i} {
+        background-color: $colour;
+    }
+}
