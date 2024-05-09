@@ -1,5 +1,10 @@
 # Associate Cloud Engineer
 ### What is Cloud Computing?
+#### https://docs.google.com/document/d/1u6pXBiGMYj7ZLBN21x6jap11rG6gWk7n210hNnUzrkI/edit#heading=h.drjuxxqatwi0
+#### https://gist.github.com/ag143/6b6b7e93df60d8d18097887db35213d5
+#### https://github.com/nschhina/ACE-Cheat-Sheet/blob/master/README.md
+#### https://tutorialsdojo.com/google-cloud-platform-gcp-cheat-sheets/
+
 #### https://ag143.github.io/GCPACE/host.html
 #### https://github.com/ag143/GCPACE/blob/main/ACE/GCPACE_slides.md
 The delivery of a shared pool of on-demand computing services over the public internet that can be rapidly provisioned and released with minimal management effort or service provider interaction.
